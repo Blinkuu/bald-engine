@@ -6,10 +6,27 @@
 
 #include <string>
 
+#ifdef WINDOWS
+#include <winsock.h>
+#endif
+
+#ifdef __APPLE__
+#include <sys/types.h>
+#endif
+
 namespace Bald::Utils {
 
     class Image {
     public:
+
+        /**
+        * @fn Image
+        * @brief Explicit constructor.
+        * @param int32_t Width.
+        * @param int32_t Height.
+        */
+
+        explicit Image(int32_t width, int32_t height);
 
         /**
         * @fn Image
@@ -60,6 +77,15 @@ namespace Bald::Utils {
         */
 
         [[nodiscard]] inline const u_char* GetData() const noexcept { return m_Data; }
+
+        /**
+        * @fn SetData
+        * @brief Data setter. Use with caution!
+        * @param u_char* Data.
+        * @param std::size_t Size.
+        */
+
+        void SetData(u_char* data, std::size_t size) noexcept;
 
     private:
 
