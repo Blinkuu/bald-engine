@@ -9,7 +9,7 @@
 #include "vendor/imgui/examples/imgui_impl_glfw.h"
 
 #include "application.h"
-#include "utils/time/timer.h"
+#include "src/core/models/timer.h"
 
 #include "GLFW/glfw3.h"
 
@@ -50,35 +50,9 @@ namespace Bald::Debug {
         ImGui::DestroyContext();
     }
 
-    void ImGuiLayer::OnUpdate() noexcept {}
+    void ImGuiLayer::OnUpdate([[maybe_unused]] float deltaTime) noexcept {}
 
-    void ImGuiLayer::OnRender() noexcept {
-        static bool show = true;
-
-        static Utils::Timer timer;
-        static bool init = true;
-        static unsigned frameCounter = 0;
-        static unsigned fps = 0;
-
-        if(init)
-        {
-            timer.Start();
-            init = false;
-        }
-
-        ImGui::ShowDemoWindow(&show);
-
-        ImGui::BeginChild("FPS");
-        if(timer.ElapsedSeconds() >= 1.0) {
-            fps = static_cast<unsigned>(frameCounter/timer.ElapsedSeconds());
-            frameCounter = 0;
-            timer.Reset();
-        }
-        ImGui::Text("FPS: %d", fps);
-        ImGui::EndChild();
-
-        ++frameCounter;
-    }
+    void ImGuiLayer::OnRender() noexcept {}
 
     void ImGuiLayer::Begin() noexcept {
         ImGui_ImplOpenGL3_NewFrame();
